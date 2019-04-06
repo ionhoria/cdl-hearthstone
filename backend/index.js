@@ -15,9 +15,9 @@ app.get('/cards/:className', (req, res) => {
   res.json(db.getCardsByClass(req.query.className))
 })
 
-app.post('/deck/{deckId}/cards}', (req, res, next) => {
+app.post('/deck/{deckId}/cards', (req, res, next) => {
   const deck = {}
-  deck[req.query.name] = req.body
+  deck[req.param.deckId] = req.body
   db.addDeck(deck)
   res.status('200').json(deck)
 })
