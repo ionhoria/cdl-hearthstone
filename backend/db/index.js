@@ -1,28 +1,24 @@
+const axios = require('axios')
 const db = class {
   constructor () {
     this.decks = []
+    axios
+      .get('https://api.hearthstonejson.com/v1/29933/enUS/cards.json')
+      .then(response => (this.cards = [...response.data]))
+      .catch(error => console.log(error))
   }
   addDeck (deck) {
-    console.log(deck)
     this.decks.push(deck)
   }
   getDecks () {
     return this.deck
   }
-  setCards (cards) {
-    this.cards = cards
-  }
+
   getCards () {
-    return [...this.cards]
+    return this.cards
   }
   getCardsByClass (className) {
-    const classCards = []
-    for (var i = 0; i < this.cards.length; i++) {
-      if (this.cards[i].cardClass == className) {
-        classCards.push(this.cards[i])
-      }
-    }
-    return classCards
+    return this.cards.filter(card => card.cardClass == className)
   }
 }
 module.exports = new db()
