@@ -1,4 +1,14 @@
 const db = class {
+  constructor () {
+    this.decks = []
+  }
+  addDeck (deck) {
+    console.log(deck)
+    this.decks.push(deck)
+  }
+  getDecks () {
+    return this.deck
+  }
   setCards (cards) {
     this.cards = cards
   }

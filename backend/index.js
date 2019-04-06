@@ -17,11 +17,20 @@ axios
   })
 
 app.use(express.json())
+
 app.get('/cards', (req, res) => {
   res.json(db.getCards())
 })
+
 app.get('/classCards/:className', (req, res) => {
   res.json(db.getCardsByClass(req.query.className))
+})
+
+app.post('/addDeck', (req, res, next) => {
+  const deck = {}
+  deck[req.query.name] = req.body
+  db.addDeck(deck)
+  res.status('200').json(deck)
 })
 
 app.post('/deck', (req, res, next) => {
