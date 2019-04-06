@@ -1,13 +1,26 @@
 const express = require('express')
 const db = require('./db')
+const axios = require('axios')
 
 const stats = {}
 const decks = {}
 const app = express()
+let cards
+axios
+  .get('https://api.hearthstonejson.com/v1/29933/enUS/cards.json')
+  .then(function (response) {
+    cards = response.data
+    db.setCards(cards)
+  })
+  .catch(function (error) {
+    console.log(error)
+  })
+
 app.use(express.json())
 app.get('/cards', (req, res) => {
   res.json(db.getCards())
 })
+
 app.post('/deck', (req, res, next) => {
   const { name, class: _class } = req.body
   if (!name || !_class) {
