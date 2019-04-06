@@ -20,6 +20,9 @@ app.use(express.json())
 app.get('/cards', (req, res) => {
   res.json(db.getCards())
 })
+app.get('/classCards/:className', (req, res) => {
+  res.json(db.getCardsByClass(req.query.className))
+})
 
 app.post('/deck', (req, res, next) => {
   const { name, class: _class } = req.body
