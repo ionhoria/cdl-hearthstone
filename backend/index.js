@@ -4,10 +4,24 @@ const db = require('./db')
 const stats = {}
 const decks = {}
 const app = express()
+
 app.use(express.json())
+
 app.get('/cards', (req, res) => {
   res.json(db.getCards())
 })
+
+app.get('/cards/:className', (req, res) => {
+  res.json(db.getCardsByClass(req.query.className))
+})
+
+app.post('/deck/:deckId/cards', (req, res, next) => {
+  const deck = {}
+  deck[req.params.deckId] = req.body.map(x => x.id)
+  db.addDeck(deck)
+  res.status('200').json(deck)
+})
+
 app.post('/deck', (req, res, next) => {
   const { name, class: _class } = req.body
   if (!name || !_class) {
