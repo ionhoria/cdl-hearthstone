@@ -10,6 +10,9 @@ app.use(express.json())
 app.get('/cards', (req, res) => {
   res.json(db.getCards())
 })
+app.get('/heroes', (req, res) => {
+  res.json(db.getHeroes())
+})
 
 app.get('/cards/:className', (req, res) => {
   res.json(db.getCardsByClass(req.query.className))

@@ -4,7 +4,12 @@ const db = class {
     this.decks = []
     axios
       .get('https://api.hearthstonejson.com/v1/29933/enUS/cards.json')
-      .then(response => (this.cards = [...response.data]))
+      .then(response => {
+        this.cards = [...response.data]
+        this.heroes = this.cards.filter(
+          card => card.type == 'HERO' && card.set == 'CORE'
+        )
+      })
       .catch(error => console.log(error))
   }
   addDeck (deck) {
@@ -12,6 +17,9 @@ const db = class {
   }
   getDecks () {
     return this.deck
+  }
+  getHeroes () {
+    return this.heroes
   }
 
   getCards () {
